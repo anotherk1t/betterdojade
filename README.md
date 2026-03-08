@@ -67,5 +67,4 @@ npm run build
 ```
 The optimized files will be generated in the `dist` directory.
 
-## License
-[Add your license here]
+

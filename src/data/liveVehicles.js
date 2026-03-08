@@ -2,13 +2,13 @@
  * Real-time GPS vehicle positions from ZTM Gdańsk Tristar system.
  *
  * API: https://ckan2.multimediagdansk.pl/gpsPositions?v=2
- * Proxied via /tristar/gpsPositions?v=2 to avoid CORS issues.
+ * Now using direct URL as CORS is supported.
  *
  * Returns positions for all ZTM vehicles with ~20s cache delay.
  * Polls every 15 seconds when active.
  */
 
-const GPS_URL = '/tristar/gpsPositions?v=2';
+const GPS_URL = 'https://ckan2.multimediagdansk.pl/gpsPositions?v=2';
 const POLL_INTERVAL = 15_000; // 15 seconds
 
 // ZTM Gdańsk tram route short names (lines 2–12)

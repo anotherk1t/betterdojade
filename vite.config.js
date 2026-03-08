@@ -11,13 +11,6 @@ export default defineConfig({
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/graphhopper/, ''),
             },
-            // Proxy /tristar/* → Tristar GPS monitoring API (ZTM Gdańsk)
-            '/tristar': {
-                target: 'https://ckan2.multimediagdansk.pl',
-                changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/tristar/, ''),
-                secure: true,
-            },
         },
     },
 });

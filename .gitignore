@@ -5,3 +5,4 @@ dist
 .env
 /data/
 /dev_tools/
+/docs/
