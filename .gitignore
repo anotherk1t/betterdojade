@@ -6,3 +6,5 @@ dist
 /data/
 /dev_tools/
 /docs/
+cloudflared.yml
+.cloudflared/

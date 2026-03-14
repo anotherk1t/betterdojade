@@ -4,7 +4,7 @@
  * Requests are proxied through Vite's dev server at /graphhopper to avoid CORS.
  */
 
-const GH_BASE = '/graphhopper';
+const GH_BASE = import.meta.env.VITE_GRAPH_HOPPER_URL || '/graphhopper';
 
 // ---------------------------------------------------------------------------
 // Street routing (foot / bike)

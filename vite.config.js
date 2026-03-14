@@ -8,7 +8,7 @@ export default defineConfig({
         proxy: {
             // Proxy /graphhopper/* → GraphHopper server on the Docker host
             '/graphhopper': {
-                target: 'http://host.docker.internal:8989',
+                target: 'http://localhost:8989',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/graphhopper/, ''),
             },
