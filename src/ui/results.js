@@ -81,6 +81,14 @@ function createRouteCard(route, index) {
         hybrid: 'Transit + Bike',
     };
 
+    const modeLabels = {
+        transit: 'Bus',
+        tram: 'Tram',
+        skm: 'SKM',
+        pkm: 'PKM',
+        polregio: 'PolRegio',
+    };
+
     // Header row
     const header = document.createElement('div');
     header.className = 'route-card-header';
@@ -113,7 +121,9 @@ function createRouteCard(route, index) {
 
         let label = modeIcons[leg.mode] || '';
         if (['transit','tram','skm','pkm','polregio'].includes(leg.mode)) {
-            label += ` ${leg.routeName || ''}`;
+            const mLabel = modeLabels[leg.mode] || '';
+            const rName = leg.routeName || '';
+            label += ` ${mLabel}${rName && rName !== mLabel ? ' ' + rName : ''}`;
         } else if (leg.mode === 'walk') {
             label += ` ${formatDuration(leg.duration)}`;
         } else if (leg.mode === 'bike') {
@@ -145,7 +155,10 @@ function createRouteCard(route, index) {
         } else if (leg.mode === 'bike') {
             descEl.textContent = `🚲 Bike ${fromName ? 'from ' + fromName : ''} ${toName ? 'to ' + toName : ''} (${formatDuration(leg.duration)})`;
         } else {
-            descEl.textContent = `${modeIcons[leg.mode] || '🚌'} ${leg.routeName || ''}: ${fromName} → ${toName}`;
+            const mLabel = modeLabels[leg.mode] || 'Bus';
+            const rName = leg.routeName || '';
+            const transitDesc = `${mLabel}${rName && rName !== mLabel ? ' ' + rName : ''}`;
+            descEl.textContent = `${modeIcons[leg.mode] || '🚌'} ${transitDesc}: ${fromName} → ${toName}`;
         }
 
         detail.appendChild(timeEl);

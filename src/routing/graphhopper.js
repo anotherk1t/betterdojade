@@ -157,6 +157,7 @@ function parsePtPath(path, egressProfile) {
             legs.push({
                 mode,
                 routeName: buildRouteName(ghLeg, mode),
+                routeShortName: ghLeg.route_short_name || '',
                 feedId: ghLeg.feed_id || '',
                 routeId: ghLeg.route_id,
                 tripId: ghLeg.trip_id,
@@ -270,10 +271,12 @@ function classifyPtMode(ghLeg) {
  * Build a human-readable route name for a PT leg.
  */
 function buildRouteName(ghLeg, mode) {
+    const line = ghLeg.route_short_name || ghLeg.route_id || '';
+
     switch (mode) {
         case 'skm':      return 'SKM';
         case 'pkm':      return 'PKM';
         case 'polregio': return 'PolRegio';
-        default:         return ghLeg.trip_headsign || ghLeg.route_id || '';
+        default:         return line;
     }
 }
