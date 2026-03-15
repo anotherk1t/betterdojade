@@ -108,16 +108,6 @@ async function loadData() {
         const trainStations = await loadTrainStations();
         displayTrainStations(trainStations);
 
-        // Load ZTM timetable
-        timetable = await fetchTimetable(undefined, (msg) => {
-            loadingText.textContent = msg;
-        });
-        displayStops(timetable.stops);
-
-        // Build transfer links
-        loadingText.textContent = 'Building routing graph...';
-        transfers = buildTransferLinks(timetable.stops);
-
         overlay.hidden = true;
         console.log('[App] Data loaded, ready for routing');
     } catch (error) {
@@ -127,11 +117,6 @@ async function loadData() {
 }
 
 async function handleSearch({ origin, destination, departureTimeSec }) {
-    if (!timetable || !transfers) {
-        console.warn('[App] Data not loaded yet');
-        return;
-    }
-
     setSearchLoading(true);
     clearRouteLines();
 
@@ -141,8 +126,6 @@ async function handleSearch({ origin, destination, departureTimeSec }) {
             origin,
             destination,
             departureTimeSec,
-            timetable,
-            transfers,
             ownBike,
         });
 
