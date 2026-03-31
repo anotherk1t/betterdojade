@@ -1,6 +1,6 @@
-# JakosDojade
+# betterdojade
 
-JakosDojade is a public transit and city bike route planning application designed for the Gdańsk region. It integrates public transit networks (ZTM Gdańsk and ZKM Gdynia) and bike station data (MEVO) to provide multi-modal routing capabilities.
+beterdojade is a public transit and city bike route planning application designed for the Gdańsk region. It integrates public transit networks (ZTM Gdańsk and ZKM Gdynia) and bike station data (MEVO) to provide multi-modal routing capabilities.
 
 ## Why?
 
