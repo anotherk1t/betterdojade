@@ -7,7 +7,7 @@
 import { runCSA } from './csa.js';
 import { findNearbyStops, buildTransferLinks } from './graph.js';
 import { haversine, estimateWalkTime, estimateBikeTime } from './geo.js';
-import { getStationsNear } from '../data/mevo.js';
+import { getStationsNear, getAvailableStationsNear, getStationAvailability } from '../data/mevo.js';
 import { getWalkingRoute, getCyclingRoute, getPtRoutes } from './graphhopper.js';
 import { loadShapes, getShapeForLeg, shapesLoaded } from '../data/shapes.js';
 
@@ -92,62 +92,90 @@ export async function planRoutes({ origin, destination, departureTimeSec, timeta
 
 
     // --- MEVO bike with walk access/egress (if stations nearby) ---
-    const originBikeStations = getStationsNear(origin.lat, origin.lon, 800);
-    const destBikeStations = getStationsNear(destination.lat, destination.lon, 800);
+    // UPDATED: Now checks real-time availability and tries multiple stations if needed
+    console.log('[Multimodal] Planning routes, fetching MEVO stations...');
+    const originBikeStations = await getAvailableStationsNear(origin.lat, origin.lon, 800);
+    const destBikeStations = await getAvailableStationsNear(destination.lat, destination.lon, 800);
+    
+    console.log(`[Multimodal] Found ${originBikeStations.length} MEVO stations near origin, ${destBikeStations.length} near destination`);
 
-    if (originBikeStations.length > 0 && destBikeStations.length > 0) {
-        const bikeStn = originBikeStations[0].item;
-        const destStn = destBikeStations[0].item;
+    // Try to find a viable route with available stations
+    for (let i = 0; i < Math.min(originBikeStations.length, 2); i++) {
+        for (let j = 0; j < Math.min(destBikeStations.length, 2); j++) {
+            const bikeStn = originBikeStations[i].item;
+            const destStn = destBikeStations[j].item;
+            const originAvail = originBikeStations[i].availability;
+            const destAvail = destBikeStations[j].availability;
 
-        const mevoBikeRoute = await getCyclingRoute(bikeStn, destStn).catch(() => null);
-        const walkToRoute   = await getWalkingRoute(origin, bikeStn).catch(() => null);
-        const walkFromRoute = await getWalkingRoute(destStn, destination).catch(() => null);
+            console.log(`[Multimodal] Trying: ${bikeStn.name} (${originAvail.bikesAvailable} bikes) → ${destStn.name} (${destAvail.docksAvailable} docks)`);
 
-        const walkToBike   = walkToRoute?.duration   ?? estimateWalkTime(originBikeStations[0].distance);
-        const walkFromBike = walkFromRoute?.duration  ?? estimateWalkTime(destBikeStations[0].distance);
-        const bikeTime     = mevoBikeRoute?.duration  ?? estimateBikeTime(haversine(bikeStn.lat, bikeStn.lon, destStn.lat, destStn.lon));
-        const totalBikeTime = walkToBike + bikeTime + walkFromBike;
+            // Skip if origin has no bikes or destination has no docks
+            if (originAvail.bikesAvailable < 1 || destAvail.docksAvailable < 1) {
+                console.log(`[Multimodal] Skipped: Not enough availability`);
+                continue; // Try next station
+            }
 
-        if (mevoBikeRoute) {
-            routes.push({
-                type: 'bike',
-                totalTime: totalBikeTime,
-                departureTime: departureTimeSec,
-                arrivalTime: departureTimeSec + totalBikeTime,
-                legs: [
-                    {
-                        mode: 'walk',
-                        from: { lat: origin.lat, lon: origin.lon, name: 'Start' },
-                        to: { lat: bikeStn.lat, lon: bikeStn.lon, name: `MEVO ${bikeStn.name}` },
-                        departureTime: departureTimeSec,
-                        arrivalTime: departureTimeSec + walkToBike,
-                        duration: walkToBike,
-                        distance: walkToRoute?.distance ?? originBikeStations[0].distance,
-                        geometry: walkToRoute?.geometry,
+            const mevoBikeRoute = await getCyclingRoute(bikeStn, destStn).catch(() => null);
+            const walkToRoute = await getWalkingRoute(origin, bikeStn).catch(() => null);
+            const walkFromRoute = await getWalkingRoute(destStn, destination).catch(() => null);
+
+            const walkToBike = walkToRoute?.duration ?? estimateWalkTime(originBikeStations[i].distance);
+            const walkFromBike = walkFromRoute?.duration ?? estimateWalkTime(destBikeStations[j].distance);
+            const bikeTime = mevoBikeRoute?.duration ?? estimateBikeTime(haversine(bikeStn.lat, bikeStn.lon, destStn.lat, destStn.lon));
+            const totalBikeTime = walkToBike + bikeTime + walkFromBike;
+
+            if (mevoBikeRoute) {
+                routes.push({
+                    type: 'bike',
+                    totalTime: totalBikeTime,
+                    departureTime: departureTimeSec,
+                    arrivalTime: departureTimeSec + totalBikeTime,
+                    // ADD availability metadata
+                    mevoMeta: {
+                        originStationId: bikeStn.id,
+                        originBikesAvailable: originAvail.bikesAvailable,
+                        originStationName: bikeStn.name,
+                        destStationId: destStn.id,
+                        destDocksAvailable: destAvail.docksAvailable,
+                        destStationName: destStn.name,
                     },
-                    {
-                        mode: 'bike',
-                        from: { lat: bikeStn.lat, lon: bikeStn.lon, name: `MEVO ${bikeStn.name}` },
-                        to: { lat: destStn.lat, lon: destStn.lon, name: `MEVO ${destStn.name}` },
-                        departureTime: departureTimeSec + walkToBike,
-                        arrivalTime: departureTimeSec + walkToBike + bikeTime,
-                        duration: bikeTime,
-                        distance: mevoBikeRoute.distance,
-                        geometry: mevoBikeRoute.geometry,
-                    },
-                    {
-                        mode: 'walk',
-                        from: { lat: destStn.lat, lon: destStn.lon, name: `MEVO ${destStn.name}` },
-                        to: { lat: destination.lat, lon: destination.lon, name: 'Destination' },
-                        departureTime: departureTimeSec + walkToBike + bikeTime,
-                        arrivalTime: departureTimeSec + totalBikeTime,
-                        duration: walkFromBike,
-                        distance: walkFromRoute?.distance ?? destBikeStations[0].distance,
-                        geometry: walkFromRoute?.geometry,
-                    },
-                ],
-            });
+                    legs: [
+                        {
+                            mode: 'walk',
+                            from: { lat: origin.lat, lon: origin.lon, name: 'Start' },
+                            to: { lat: bikeStn.lat, lon: bikeStn.lon, name: `MEVO ${bikeStn.name}` },
+                            departureTime: departureTimeSec,
+                            arrivalTime: departureTimeSec + walkToBike,
+                            duration: walkToBike,
+                            distance: walkToRoute?.distance ?? originBikeStations[i].distance,
+                            geometry: walkToRoute?.geometry,
+                        },
+                        {
+                            mode: 'bike',
+                            from: { lat: bikeStn.lat, lon: bikeStn.lon, name: `MEVO ${bikeStn.name}` },
+                            to: { lat: destStn.lat, lon: destStn.lon, name: `MEVO ${destStn.name}` },
+                            departureTime: departureTimeSec + walkToBike,
+                            arrivalTime: departureTimeSec + walkToBike + bikeTime,
+                            duration: bikeTime,
+                            distance: mevoBikeRoute.distance,
+                            geometry: mevoBikeRoute.geometry,
+                        },
+                        {
+                            mode: 'walk',
+                            from: { lat: destStn.lat, lon: destStn.lon, name: `MEVO ${destStn.name}` },
+                            to: { lat: destination.lat, lon: destination.lon, name: 'Destination' },
+                            departureTime: departureTimeSec + walkToBike + bikeTime,
+                            arrivalTime: departureTimeSec + totalBikeTime,
+                            duration: walkFromBike,
+                            distance: walkFromRoute?.distance ?? destBikeStations[j].distance,
+                            geometry: walkFromRoute?.geometry,
+                        },
+                    ],
+                });
+                break; // Found viable route, no need to try more destinations
+            }
         }
+        if (routes.some(r => r.type === 'bike')) break; // If found bike route, stop
     }
 
     // --- GraphHopper PT transit routes (filter out walk-only results) ---

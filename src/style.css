@@ -431,6 +431,37 @@ input {
   background: rgba(79, 140, 255, 0.08);
 }
 
+/* MEVO Availability Badges */
+.mevo-availability {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.availability-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: var(--radius-xs);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: #f0f0f0;
+  color: #333;
+}
+
+.availability-badge.available {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--accent-bike);
+}
+
+.availability-badge.unavailable {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
 .route-card-header {
   display: flex;
   justify-content: space-between;

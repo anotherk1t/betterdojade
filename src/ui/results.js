@@ -104,6 +104,22 @@ function createRouteCard(route, index) {
     header.appendChild(duration);
     header.appendChild(times);
 
+    // MEVO availability badges
+    let availabilityHtml = '';
+    if (route.type === 'bike' && route.mevoMeta) {
+        const { originBikesAvailable, destDocksAvailable } = route.mevoMeta;
+        const bikesClass = originBikesAvailable > 0 ? 'available' : 'unavailable';
+        const docksClass = destDocksAvailable > 0 ? 'available' : 'unavailable';
+        
+        const availDiv = document.createElement('div');
+        availDiv.className = 'mevo-availability';
+        availDiv.innerHTML = `
+            <span class="availability-badge ${bikesClass}">🚲 ${originBikesAvailable} bikes</span>
+            <span class="availability-badge ${docksClass}">📍 ${destDocksAvailable} docks</span>
+        `;
+        card.appendChild(availDiv);
+    }
+
     // Legs badges
     const legsRow = document.createElement('div');
     legsRow.className = 'route-legs';
