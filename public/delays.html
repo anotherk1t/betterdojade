@@ -13,11 +13,11 @@
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--txt);
     font:15px/1.5 -apple-system,Inter,Segoe UI,Roboto,sans-serif}
-  header{padding:24px 20px 8px;max-width:1100px;margin:0 auto}
+  header{padding:24px 20px 8px;max-width:1340px;margin:0 auto}
   h1{margin:0 0 4px;font-size:24px}
   h1 .city{color:var(--accent)}
   .sub{color:var(--muted);margin:0 0 4px;max-width:760px}
-  main{max-width:1100px;margin:0 auto;padding:8px 20px 60px}
+  main{max-width:1340px;margin:0 auto;padding:8px 20px 60px}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:16px 0}
   .card h2{margin:0 0 12px;font-size:16px;font-weight:600}
   .row{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
@@ -50,7 +50,7 @@
 </head>
 <body>
 <header>
-  <h1>🚊 betterdojade <span class="city">Gdańsk</span> — Delay Predictions</h1>
+  <h1>betterdojade <span class="city">Gdańsk</span> — Delay Predictions</h1>
   <p class="sub">ZTM tells you a bus is late <em>right now</em>; it's poor at saying how late it'll
   actually be by the time it reaches you. This model predicts each upcoming departure's
   <strong>final</strong> delay. Below: live predictions vs ZTM, then how the model performs against ZTM overall.</p>
@@ -120,16 +120,21 @@ const cls = s => s>30?'late':(s<-30?'early':'ontime');
 // Escape free-text fields (route/headsign originate from the external ZTM feed) before innerHTML.
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
+const ONTIME_S = 60;  // hide departures within ±1 min on BOTH ZTM and model (just clutter)
 function renderLive(){
   const q = filter.trim().toLowerCase();
-  let r = rows.filter(p => !q || p.route.toLowerCase().includes(q) || p.headsign.toLowerCase().includes(q) || p.stop_name.toLowerCase().includes(q));
+  const matchesText = p => !q || p.route.toLowerCase().includes(q) || p.headsign.toLowerCase().includes(q) || p.stop_name.toLowerCase().includes(q);
+  const interesting = p => Math.abs(p.model_final_s) > ONTIME_S || Math.abs(p.ztm_delay_s) > ONTIME_S;
+  const textMatched = rows.filter(matchesText);
+  let r = textMatched.filter(interesting);
+  const hidden = textMatched.length - r.length;
   r.sort((a,b)=>{
     let x=a[sortKey], y=b[sortKey];
     if(sortKey==='divergence_s'){x=Math.abs(x);y=Math.abs(y);}
     if(typeof x==='string') return sortDir*x.localeCompare(y);
     return sortDir*((x>y)-(x<y));
   });
-  document.getElementById('shown').textContent = `${r.length} departures`;
+  document.getElementById('shown').textContent = `${r.length} delayed` + (hidden ? ` · ${hidden} on-time hidden` : '');
   document.getElementById('livebody').innerHTML = r.slice(0,400).map(p=>`
     <tr>
       <td><span class="route">${esc(p.route)}</span></td>
