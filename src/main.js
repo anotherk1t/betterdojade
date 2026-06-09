@@ -1,5 +1,5 @@
 /**
- * BikeRouter Gdańsk — Main application entry point.
+ * betterdojade Gdańsk — Main application entry point.
  * Wires together data loading, map, search, routing, and results display.
  */
 
