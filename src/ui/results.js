@@ -104,6 +104,28 @@ function createRouteCard(route, index) {
     header.appendChild(duration);
     header.appendChild(times);
 
+    // MEVO availability badges
+    if (route.type === 'bike' && route.mevoMeta) {
+        const { originBikesAvailable, destDocksAvailable } = route.mevoMeta;
+        const bikesClass = originBikesAvailable > 0 ? 'available' : 'unavailable';
+        const docksClass = destDocksAvailable > 0 ? 'available' : 'unavailable';
+
+        const availDiv = document.createElement('div');
+        availDiv.className = 'mevo-availability';
+        
+        const bikesSpan = document.createElement('span');
+        bikesSpan.className = `availability-badge ${bikesClass}`;
+        bikesSpan.textContent = `🚲 ${originBikesAvailable} bikes`;
+        
+        const docksSpan = document.createElement('span');
+        docksSpan.className = `availability-badge ${docksClass}`;
+        docksSpan.textContent = `📍 ${destDocksAvailable} docks`;
+        
+        availDiv.appendChild(bikesSpan);
+        availDiv.appendChild(docksSpan);
+        card.insertBefore(availDiv, header.nextSibling);
+    }
+
     // Legs badges
     const legsRow = document.createElement('div');
     legsRow.className = 'route-legs';

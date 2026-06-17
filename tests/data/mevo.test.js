@@ -62,7 +62,31 @@ describe('mevo', () => {
         expect(near.map(n => n.item.id)).toEqual(['s1']);
     });
 
-    it('getStationAvailability returns null (not implemented)', async () => {
-        await expect(mevo.getStationAvailability('s1')).resolves.toBeNull();
+    it('getStationAvailability returns availability data with mock defaults', async () => {
+        await mevo.loadStations();
+        const result = await mevo.getStationAvailability('s1');
+        expect(result).toBeDefined();
+        expect(result).toHaveProperty('bikesAvailable');
+        expect(result).toHaveProperty('docksAvailable');
+        expect(result).toHaveProperty('isAvailable');
+        expect(result).toHaveProperty('isMockData');
+        expect(typeof result.bikesAvailable).toBe('number');
+        expect(typeof result.docksAvailable).toBe('number');
+        expect(typeof result.isAvailable).toBe('boolean');
+    });
+
+    it('getAvailableStationsNear returns stations with availability', async () => {
+        await mevo.loadStations();
+        const available = await mevo.getAvailableStationsNear(54.350, 18.650, 800);
+        expect(Array.isArray(available)).toBe(true);
+        // Should include stations with availability data wrapped in {item, distance, availability}
+        if (available.length > 0) {
+            expect(available[0]).toHaveProperty('item');
+            expect(available[0]).toHaveProperty('distance');
+            expect(available[0]).toHaveProperty('availability');
+            expect(available[0].item).toHaveProperty('id');
+            expect(available[0].availability).toHaveProperty('bikesAvailable');
+            expect(available[0].availability).toHaveProperty('docksAvailable');
+        }
     });
 });

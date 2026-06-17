@@ -14,6 +14,9 @@ vi.mock('../../src/data/shapes.js', () => ({
 
 vi.mock('../../src/data/mevo.js', () => ({
     getStationsNear: vi.fn(() => []),
+    getAvailableStationsNear: vi.fn().mockResolvedValue([]),
+    loadStations: vi.fn().mockResolvedValue([]),
+    getStationAvailability: vi.fn().mockResolvedValue(null),
 }));
 
 let planRoutes;
@@ -31,7 +34,12 @@ beforeEach(async () => {
     gh.getCyclingRoute.mockReset();
     gh.getPtRoutes.mockReset();
     mevo.getStationsNear.mockReset();
+    mevo.getAvailableStationsNear.mockReset();
+    mevo.loadStations.mockReset();
+    mevo.getStationAvailability.mockReset();
     mevo.getStationsNear.mockReturnValue([]);
+    mevo.getAvailableStationsNear.mockResolvedValue([]);
+    mevo.loadStations.mockResolvedValue([]);
 });
 
 const ORIGIN = { lat: 54.350, lon: 18.650 };
@@ -129,16 +137,23 @@ describe('planRoutes', () => {
         const stnA = { id: 'A', name: 'A', lat: 54.351, lon: 18.650 };
         const stnB = { id: 'B', name: 'B', lat: 54.449, lon: 18.650 };
 
-        mevo.getStationsNear.mockImplementation((lat) => {
-            // Near origin or destination, return appropriate station; otherwise empty.
-            if (Math.abs(lat - ORIGIN.lat) < 0.005) return [{ item: stnA, distance: 100 }];
-            if (Math.abs(lat - DEST_FAR.lat) < 0.005) return [{ item: stnB, distance: 100 }];
-            return [];
+        mevo.getAvailableStationsNear.mockImplementation((lat) => {
+            // Near origin or destination, return appropriate station with availability; otherwise empty.
+            if (Math.abs(lat - ORIGIN.lat) < 0.005) return Promise.resolve([{
+                item: stnA, distance: 100,
+                availability: { bikesAvailable: 5, docksAvailable: 3, isAvailable: true, isMockData: true },
+            }]);
+            if (Math.abs(lat - DEST_FAR.lat) < 0.005) return Promise.resolve([{
+                item: stnB, distance: 100,
+                availability: { bikesAvailable: 4, docksAvailable: 4, isAvailable: true, isMockData: true },
+            }]);
+            return Promise.resolve([]);
         });
 
         gh.getWalkingRoute.mockResolvedValue({ duration: 100, distance: 100, geometry: null });
         gh.getCyclingRoute.mockResolvedValue({ duration: 1500, distance: 11000, geometry: null });
         gh.getPtRoutes.mockResolvedValue([]);
+        mevo.loadStations.mockResolvedValue([]);
 
         const routes = await planRoutes({
             origin: ORIGIN, destination: DEST_FAR,
