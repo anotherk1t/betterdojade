@@ -1,0 +1,522 @@
+{
+ "points": {
+  "gdansk_glowny": [
+   54.3564345,
+   18.6441946
+  ],
+  "stare_miasto": [
+   54.3483333,
+   18.6538414
+  ],
+  "wrzeszcz": [
+   54.3817696,
+   18.6055111
+  ],
+  "oliwa": [
+   54.4094881,
+   18.5719775
+  ],
+  "sopot": [
+   54.4400569,
+   18.5623141
+  ],
+  "gdynia_glowna": [
+   54.5217877,
+   18.5268255
+  ],
+  "przymorze": [
+   54.4098101,
+   18.5918135
+  ],
+  "zaspa": [
+   54.3998678,
+   18.5954497
+  ],
+  "nowy_port": [
+   54.4048961,
+   18.6570931
+  ],
+  "brzezno": [
+   54.4141344,
+   18.6249469
+  ],
+  "orunia": [
+   54.3239034,
+   18.6329388
+  ],
+  "jasien": [
+   54.3400887,
+   18.560014
+  ],
+  "osowa": [
+   54.4301317,
+   18.4698659
+  ]
+ },
+ "routes": [
+  {
+   "id": "r01",
+   "name": "Gdansk Glowny -> Stare Miasto",
+   "from": "gdansk_glowny",
+   "to": "stare_miasto",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 1677.0,
+     "time": 298.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 1677.0,
+     "time": 298.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 1677.0,
+     "time": 298.0
+    }
+   }
+  },
+  {
+   "id": "r02",
+   "name": "Gdansk Glowny -> Wrzeszcz",
+   "from": "gdansk_glowny",
+   "to": "wrzeszcz",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 4244.0,
+     "time": 806.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 4244.0,
+     "time": 806.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 4297.0,
+     "time": 819.0
+    }
+   }
+  },
+  {
+   "id": "r03",
+   "name": "Gdansk Glowny -> Oliwa",
+   "from": "gdansk_glowny",
+   "to": "oliwa",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 8501.0,
+     "time": 1551.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 8520.0,
+     "time": 1554.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 8501.0,
+     "time": 1551.0
+    }
+   }
+  },
+  {
+   "id": "r04",
+   "name": "Gdansk Glowny -> Sopot",
+   "from": "gdansk_glowny",
+   "to": "sopot",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 13504.0,
+     "time": 2367.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 12301.0,
+     "time": 2166.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 13265.0,
+     "time": 2327.0
+    }
+   }
+  },
+  {
+   "id": "r05",
+   "name": "Gdansk Glowny -> Gdynia Glowna",
+   "from": "gdansk_glowny",
+   "to": "gdynia_glowna",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 22519.0,
+     "time": 4008.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 22378.0,
+     "time": 4003.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 22519.0,
+     "time": 4008.0
+    }
+   }
+  },
+  {
+   "id": "r06",
+   "name": "Wrzeszcz -> Oliwa (hilly)",
+   "from": "wrzeszcz",
+   "to": "oliwa",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 4622.0,
+     "time": 802.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 4627.0,
+     "time": 801.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 4619.0,
+     "time": 801.0
+    }
+   }
+  },
+  {
+   "id": "r07",
+   "name": "Oliwa -> Sopot (hilly)",
+   "from": "oliwa",
+   "to": "sopot",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 4623.0,
+     "time": 795.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 5418.0,
+     "time": 905.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 4634.0,
+     "time": 798.0
+    }
+   }
+  },
+  {
+   "id": "r08",
+   "name": "Sopot -> Gdynia",
+   "from": "sopot",
+   "to": "gdynia_glowna",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 10615.0,
+     "time": 1904.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 10860.0,
+     "time": 1948.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 10874.0,
+     "time": 1959.0
+    }
+   }
+  },
+  {
+   "id": "r09",
+   "name": "Gdansk Glowny -> Przymorze",
+   "from": "gdansk_glowny",
+   "to": "przymorze",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 8443.0,
+     "time": 1484.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 7761.0,
+     "time": 1370.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 8052.0,
+     "time": 1423.0
+    }
+   }
+  },
+  {
+   "id": "r10",
+   "name": "Gdansk Glowny -> Zaspa",
+   "from": "gdansk_glowny",
+   "to": "zaspa",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 6970.0,
+     "time": 1223.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 7052.0,
+     "time": 1234.0
+    },
+    "br_safety": {
+     "ok": false,
+     "error": "HTTP Error 403: Forbidden"
+    }
+   }
+  },
+  {
+   "id": "r11",
+   "name": "Gdansk Glowny -> Nowy Port",
+   "from": "gdansk_glowny",
+   "to": "nowy_port",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 8699.0,
+     "time": 1484.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 7966.0,
+     "time": 1361.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 8699.0,
+     "time": 1484.0
+    }
+   }
+  },
+  {
+   "id": "r12",
+   "name": "Gdansk Glowny -> Brzezno",
+   "from": "gdansk_glowny",
+   "to": "brzezno",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 7411.0,
+     "time": 1263.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 7384.0,
+     "time": 1257.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 7411.0,
+     "time": 1263.0
+    }
+   }
+  },
+  {
+   "id": "r13",
+   "name": "Gdansk Glowny -> Orunia",
+   "from": "gdansk_glowny",
+   "to": "orunia",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 4371.0,
+     "time": 765.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 4408.0,
+     "time": 788.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 4394.0,
+     "time": 771.0
+    }
+   }
+  },
+  {
+   "id": "r14",
+   "name": "Gdansk Glowny -> Jasien",
+   "from": "gdansk_glowny",
+   "to": "jasien",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 6688.0,
+     "time": 1784.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 6665.0,
+     "time": 1780.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 8172.0,
+     "time": 2119.0
+    }
+   }
+  },
+  {
+   "id": "r15",
+   "name": "Gdansk Glowny -> Osowa",
+   "from": "gdansk_glowny",
+   "to": "osowa",
+   "engines": {
+    "motis": {
+     "ok": true,
+     "n": 1,
+     "diag_ok": false
+    },
+    "gh": {
+     "ok": true
+    },
+    "br_trekking": {
+     "ok": true,
+     "dist": 16903.0,
+     "time": 3823.0
+    },
+    "br_fastbike": {
+     "ok": true,
+     "dist": 16536.0,
+     "time": 3796.0
+    },
+    "br_safety": {
+     "ok": true,
+     "dist": 17366.0,
+     "time": 3910.0
+    }
+   }
+  }
+ ]
+}

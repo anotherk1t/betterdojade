@@ -1,0 +1,102 @@
+# MOTIS v2.11.4 configuration for the Tri-City network.
+# Copy to config.yml, adjust paths, then run from this directory:
+#   motis import -d data/motis-data
+#   motis server -d data/motis-data
+#
+# Paths below are relative to this directory.
+# Data preparation steps are in README.md.
+
+osm: ./data/tricity.osm.pbf
+
+timetable:
+  first_day: TODAY
+  num_days: 30
+  tb: false
+  railviz: false
+  with_shapes: true
+  adjust_footpaths: true
+  merge_dupes_intra_src: false
+  merge_dupes_inter_src: false
+  link_stop_distance: 100
+  update_interval: 60
+  http_timeout: 30
+  canned_rt: false
+  incremental_rt_update: false
+  extend_missing_footpaths: false
+  max_footpath_length: 15
+  default_transfer_time: 2
+  # Server-side default. Bike and walk requests should pass
+  # maxMatchingDistance=250 explicitly (see api-examples.md).
+  max_matching_distance: 25.0
+  preprocess_max_matching_distance: 250.0
+
+  datasets:
+    gtfs-gdansk:
+      path: ./data/gtfs/gdansk.zip
+      extend_calendar: false
+      default_bikes_allowed: false
+      default_cars_allowed: false
+      default_reservation_not_required: true
+      clasz_reservation_not_required:
+        AIR: false
+        COACH: false
+        NIGHT: false
+        ODM: false
+        RIDESHARING: false
+      rt:
+        # Gdańsk trip updates. MOTIS polls this while the server runs.
+        - url: https://ckan2.multimediagdansk.pl/gtfs-rt?feed=tripUpdates
+          protocol: gtfsrt
+
+    gtfs-gdynia:
+      path: ./data/gtfs/gdynia.zip
+      extend_calendar: false
+      default_bikes_allowed: false
+      default_cars_allowed: false
+      default_reservation_not_required: true
+      clasz_reservation_not_required:
+        AIR: false
+        COACH: false
+        NIGHT: false
+        ODM: false
+        RIDESHARING: false
+
+    gtfs-polregio:
+      path: ./data/gtfs/polregio.zip
+      extend_calendar: false
+      default_bikes_allowed: false
+      default_cars_allowed: false
+      default_reservation_not_required: true
+      clasz_reservation_not_required:
+        AIR: false
+        COACH: false
+        NIGHT: false
+        ODM: false
+        RIDESHARING: false
+
+    gtfs-skm:
+      path: ./data/gtfs/skm.zip
+      extend_calendar: false
+      default_bikes_allowed: false
+      default_cars_allowed: false
+      default_reservation_not_required: true
+      clasz_reservation_not_required:
+        AIR: false
+        COACH: false
+        NIGHT: false
+        ODM: false
+        RIDESHARING: false
+
+elevators: false
+street_routing: true
+osr_footpath: false
+geocoding: false
+reverse_geocoding: false
+
+gbfs:
+  feeds:
+    mevo:
+      # Official MEVO GBFS endpoint. A Client-Identifier header is required.
+      url: https://gbfs.urbansharing.com/rowermevo.pl/gbfs.json
+      headers:
+        Client-Identifier: bikerouter-motis

@@ -1,0 +1,7 @@
+out/
+metrics.json
+osm_index.pkl
+highways.geojson
+signals.geojson
+highways.osm.pbf
+signals.osm.pbf
