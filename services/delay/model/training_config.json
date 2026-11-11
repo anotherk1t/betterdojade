@@ -1,0 +1,1100 @@
+{
+  "config": "rich",
+  "params_name": "p2_l1_fast",
+  "params": {
+    "objective": "regression_l1",
+    "learning_rate": 0.05,
+    "num_leaves": 128,
+    "min_child_samples": 100,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "colsample_bytree": 0.8,
+    "reg_lambda": 0.0,
+    "force_col_wise": true,
+    "seed": 42,
+    "num_threads": 10,
+    "verbosity": -1,
+    "metric": "mae",
+    "max_bin": 127,
+    "num_boost_round": 2500
+  },
+  "features": [
+    "route",
+    "stop",
+    "vsvc",
+    "headsign",
+    "lead_min",
+    "hour",
+    "dow",
+    "hour_sin",
+    "hour_cos",
+    "dow_sin",
+    "dow_cos",
+    "current_delay",
+    "prev1",
+    "prev2",
+    "delta_prev1",
+    "delta_prev2",
+    "hist_mean3",
+    "hist_std3",
+    "obs_index",
+    "hist_mean5",
+    "hist_std5",
+    "obs_span_min",
+    "trend_per_min",
+    "lead_bucket",
+    "route_mean_target",
+    "route_mean_corr",
+    "route_mean_current",
+    "stop_mean_target",
+    "stop_mean_corr",
+    "stop_std_target",
+    "vsvc_mean_corr",
+    "route_bucket_corr",
+    "global_bucket_corr",
+    "current_minus_route_mean",
+    "current_plus_trend",
+    "hist_mean3_plus_trend",
+    "route_corr_lead",
+    "stop_corr_lead"
+  ],
+  "n_features": 38,
+  "cat_route": false,
+  "train": {
+    "dumps": [
+      "dumps/train_apr.bin",
+      "dumps/train_sepoct.bin"
+    ],
+    "train_start": "2026-09-01",
+    "train_end_exclusive": "2026-10-22",
+    "val_end_exclusive": "2026-10-25",
+    "rows": 5999474,
+    "weight_half_life_days": null,
+    "max_train_rows": 6000000
+  },
+  "best_iteration": 2500,
+  "best_score_mae": 57.22716084130854,
+  "internal_val": {
+    "rows": 492981,
+    "mae_s": 57.2272,
+    "rmse_s": 114.4386,
+    "bias_s": -16.4153,
+    "mae_ztm_s": 93.8188,
+    "rmse_ztm_s": 161.7146,
+    "bias_ztm_s": -46.6401,
+    "buckets": {
+      "0_5min": {
+        "rows": 64831,
+        "mae_s": 29.33,
+        "rmse_s": 60.5505,
+        "mae_ztm_s": 34.3701,
+        "gain_s": 5.0401
+      },
+      "5_15min": {
+        "rows": 181334,
+        "mae_s": 49.661,
+        "rmse_s": 94.9447,
+        "mae_ztm_s": 75.0493,
+        "gain_s": 25.3883
+      },
+      "15_30min": {
+        "rows": 246785,
+        "mae_s": 70.1196,
+        "rmse_s": 136.2866,
+        "mae_ztm_s": 123.2365,
+        "gain_s": 53.1169
+      },
+      "30_60min": {
+        "rows": 31,
+        "mae_s": 23.0116,
+        "rmse_s": 40.5083,
+        "mae_ztm_s": 24.1613,
+        "gain_s": 1.1497
+      }
+    },
+    "gain_s": 36.5916,
+    "route_table": [
+      {
+        "route_code": 0,
+        "rows": 27409,
+        "mae_s": 40.9116,
+        "mae_ztm_s": 106.5411,
+        "gain_s": 65.6295,
+        "rmse_s": 74.4476,
+        "rmse_ztm_s": 145.258
+      },
+      {
+        "route_code": 1,
+        "rows": 26444,
+        "mae_s": 33.0094,
+        "mae_ztm_s": 95.8763,
+        "gain_s": 62.8669,
+        "rmse_s": 50.8441,
+        "rmse_ztm_s": 126.9646
+      },
+      {
+        "route_code": 2,
+        "rows": 20461,
+        "mae_s": 36.6571,
+        "mae_ztm_s": 92.329,
+        "gain_s": 55.6719,
+        "rmse_s": 72.6376,
+        "rmse_ztm_s": 134.6569
+      },
+      {
+        "route_code": 4,
+        "rows": 17585,
+        "mae_s": 34.6924,
+        "mae_ztm_s": 94.1364,
+        "gain_s": 59.4441,
+        "rmse_s": 49.4444,
+        "rmse_ztm_s": 123.4903
+      },
+      {
+        "route_code": 3,
+        "rows": 17248,
+        "mae_s": 68.6973,
+        "mae_ztm_s": 85.0038,
+        "gain_s": 16.3064,
+        "rmse_s": 131.1214,
+        "rmse_ztm_s": 152.5575
+      },
+      {
+        "route_code": 5,
+        "rows": 16946,
+        "mae_s": 44.5907,
+        "mae_ztm_s": 101.3876,
+        "gain_s": 56.7969,
+        "rmse_s": 64.4698,
+        "rmse_ztm_s": 138.3818
+      },
+      {
+        "route_code": 6,
+        "rows": 15240,
+        "mae_s": 69.2218,
+        "mae_ztm_s": 93.1578,
+        "gain_s": 23.936,
+        "rmse_s": 125.741,
+        "rmse_ztm_s": 164.9509
+      },
+      {
+        "route_code": 8,
+        "rows": 14507,
+        "mae_s": 30.6337,
+        "mae_ztm_s": 84.6606,
+        "gain_s": 54.0269,
+        "rmse_s": 42.1396,
+        "rmse_ztm_s": 112.3556
+      },
+      {
+        "route_code": 7,
+        "rows": 12879,
+        "mae_s": 100.5797,
+        "mae_ztm_s": 120.8539,
+        "gain_s": 20.2742,
+        "rmse_s": 208.9178,
+        "rmse_ztm_s": 247.0566
+      },
+      {
+        "route_code": 9,
+        "rows": 12157,
+        "mae_s": 40.9133,
+        "mae_ztm_s": 99.2271,
+        "gain_s": 58.3138,
+        "rmse_s": 60.2266,
+        "rmse_ztm_s": 136.7315
+      },
+      {
+        "route_code": 11,
+        "rows": 10682,
+        "mae_s": 52.3573,
+        "mae_ztm_s": 77.4331,
+        "gain_s": 25.0758,
+        "rmse_s": 86.7104,
+        "rmse_ztm_s": 123.7646
+      },
+      {
+        "route_code": 13,
+        "rows": 10253,
+        "mae_s": 74.9857,
+        "mae_ztm_s": 107.398,
+        "gain_s": 32.4124,
+        "rmse_s": 157.2275,
+        "rmse_ztm_s": 201.9101
+      },
+      {
+        "route_code": 12,
+        "rows": 10008,
+        "mae_s": 61.0406,
+        "mae_ztm_s": 85.7925,
+        "gain_s": 24.7519,
+        "rmse_s": 106.1727,
+        "rmse_ztm_s": 143.2329
+      },
+      {
+        "route_code": 17,
+        "rows": 9923,
+        "mae_s": 57.2528,
+        "mae_ztm_s": 120.1699,
+        "gain_s": 62.9171,
+        "rmse_s": 134.3982,
+        "rmse_ztm_s": 223.4697
+      },
+      {
+        "route_code": 14,
+        "rows": 9195,
+        "mae_s": 81.5235,
+        "mae_ztm_s": 102.8935,
+        "gain_s": 21.3701,
+        "rmse_s": 142.5052,
+        "rmse_ztm_s": 171.7909
+      },
+      {
+        "route_code": 18,
+        "rows": 8922,
+        "mae_s": 41.4361,
+        "mae_ztm_s": 50.215,
+        "gain_s": 8.7789,
+        "rmse_s": 77.2157,
+        "rmse_ztm_s": 92.3344
+      },
+      {
+        "route_code": 22,
+        "rows": 8809,
+        "mae_s": 55.5018,
+        "mae_ztm_s": 76.2665,
+        "gain_s": 20.7647,
+        "rmse_s": 99.5835,
+        "rmse_ztm_s": 130.5259
+      },
+      {
+        "route_code": 10,
+        "rows": 8707,
+        "mae_s": 59.3803,
+        "mae_ztm_s": 73.8091,
+        "gain_s": 14.4288,
+        "rmse_s": 128.883,
+        "rmse_ztm_s": 153.4639
+      },
+      {
+        "route_code": 16,
+        "rows": 8621,
+        "mae_s": 70.6308,
+        "mae_ztm_s": 86.6277,
+        "gain_s": 15.9968,
+        "rmse_s": 144.213,
+        "rmse_ztm_s": 176.0769
+      },
+      {
+        "route_code": 21,
+        "rows": 8321,
+        "mae_s": 51.6605,
+        "mae_ztm_s": 69.9422,
+        "gain_s": 18.2817,
+        "rmse_s": 99.4922,
+        "rmse_ztm_s": 123.2708
+      },
+      {
+        "route_code": 19,
+        "rows": 8270,
+        "mae_s": 64.6041,
+        "mae_ztm_s": 85.231,
+        "gain_s": 20.6269,
+        "rmse_s": 112.2545,
+        "rmse_ztm_s": 149.759
+      },
+      {
+        "route_code": 25,
+        "rows": 8145,
+        "mae_s": 40.6729,
+        "mae_ztm_s": 107.0457,
+        "gain_s": 66.3728,
+        "rmse_s": 71.8981,
+        "rmse_ztm_s": 152.2498
+      },
+      {
+        "route_code": 26,
+        "rows": 8083,
+        "mae_s": 81.1987,
+        "mae_ztm_s": 102.5841,
+        "gain_s": 21.3853,
+        "rmse_s": 156.303,
+        "rmse_ztm_s": 189.5358
+      },
+      {
+        "route_code": 15,
+        "rows": 7968,
+        "mae_s": 69.828,
+        "mae_ztm_s": 97.5703,
+        "gain_s": 27.7423,
+        "rmse_s": 128.3868,
+        "rmse_ztm_s": 179.5866
+      },
+      {
+        "route_code": 23,
+        "rows": 7886,
+        "mae_s": 83.0251,
+        "mae_ztm_s": 155.1746,
+        "gain_s": 72.1495,
+        "rmse_s": 144.0552,
+        "rmse_ztm_s": 247.8603
+      },
+      {
+        "route_code": 24,
+        "rows": 7785,
+        "mae_s": 50.8444,
+        "mae_ztm_s": 60.4435,
+        "gain_s": 9.5992,
+        "rmse_s": 97.7174,
+        "rmse_ztm_s": 124.1715
+      },
+      {
+        "route_code": 29,
+        "rows": 7728,
+        "mae_s": 33.3208,
+        "mae_ztm_s": 100.683,
+        "gain_s": 67.3622,
+        "rmse_s": 50.1625,
+        "rmse_ztm_s": 137.9853
+      },
+      {
+        "route_code": 20,
+        "rows": 7597,
+        "mae_s": 57.1614,
+        "mae_ztm_s": 77.6919,
+        "gain_s": 20.5304,
+        "rmse_s": 121.5895,
+        "rmse_ztm_s": 155.4871
+      },
+      {
+        "route_code": 28,
+        "rows": 6863,
+        "mae_s": 63.1962,
+        "mae_ztm_s": 77.1976,
+        "gain_s": 14.0014,
+        "rmse_s": 139.6702,
+        "rmse_ztm_s": 160.7365
+      },
+      {
+        "route_code": 30,
+        "rows": 6104,
+        "mae_s": 69.6045,
+        "mae_ztm_s": 99.7051,
+        "gain_s": 30.1006,
+        "rmse_s": 113.0399,
+        "rmse_ztm_s": 175.0101
+      },
+      {
+        "route_code": 33,
+        "rows": 5969,
+        "mae_s": 56.989,
+        "mae_ztm_s": 96.746,
+        "gain_s": 39.757,
+        "rmse_s": 122.1781,
+        "rmse_ztm_s": 146.2107
+      },
+      {
+        "route_code": 38,
+        "rows": 5756,
+        "mae_s": 61.305,
+        "mae_ztm_s": 95.34,
+        "gain_s": 34.035,
+        "rmse_s": 114.8325,
+        "rmse_ztm_s": 153.707
+      },
+      {
+        "route_code": 35,
+        "rows": 5483,
+        "mae_s": 68.8601,
+        "mae_ztm_s": 83.8298,
+        "gain_s": 14.9697,
+        "rmse_s": 136.7281,
+        "rmse_ztm_s": 155.5617
+      },
+      {
+        "route_code": 36,
+        "rows": 5463,
+        "mae_s": 85.1363,
+        "mae_ztm_s": 103.903,
+        "gain_s": 18.7667,
+        "rmse_s": 198.0551,
+        "rmse_ztm_s": 224.7136
+      },
+      {
+        "route_code": 27,
+        "rows": 5348,
+        "mae_s": 78.4318,
+        "mae_ztm_s": 97.9615,
+        "gain_s": 19.5297,
+        "rmse_s": 138.856,
+        "rmse_ztm_s": 170.8389
+      },
+      {
+        "route_code": 31,
+        "rows": 5168,
+        "mae_s": 91.9323,
+        "mae_ztm_s": 115.9176,
+        "gain_s": 23.9852,
+        "rmse_s": 193.8139,
+        "rmse_ztm_s": 223.1444
+      },
+      {
+        "route_code": 32,
+        "rows": 5145,
+        "mae_s": 81.9924,
+        "mae_ztm_s": 108.1808,
+        "gain_s": 26.1884,
+        "rmse_s": 181.8675,
+        "rmse_ztm_s": 214.0442
+      },
+      {
+        "route_code": 34,
+        "rows": 5043,
+        "mae_s": 50.9474,
+        "mae_ztm_s": 69.878,
+        "gain_s": 18.9306,
+        "rmse_s": 95.2629,
+        "rmse_ztm_s": 128.5549
+      },
+      {
+        "route_code": 37,
+        "rows": 4340,
+        "mae_s": 71.5051,
+        "mae_ztm_s": 111.3505,
+        "gain_s": 39.8453,
+        "rmse_s": 123.7971,
+        "rmse_ztm_s": 179.019
+      },
+      {
+        "route_code": 41,
+        "rows": 4329,
+        "mae_s": 54.5811,
+        "mae_ztm_s": 60.5151,
+        "gain_s": 5.934,
+        "rmse_s": 161.5301,
+        "rmse_ztm_s": 185.1984
+      },
+      {
+        "route_code": 42,
+        "rows": 4249,
+        "mae_s": 56.9293,
+        "mae_ztm_s": 73.2306,
+        "gain_s": 16.3014,
+        "rmse_s": 87.5787,
+        "rmse_ztm_s": 106.8718
+      },
+      {
+        "route_code": 43,
+        "rows": 3904,
+        "mae_s": 86.532,
+        "mae_ztm_s": 133.4892,
+        "gain_s": 46.9573,
+        "rmse_s": 180.4036,
+        "rmse_ztm_s": 247.0179
+      },
+      {
+        "route_code": 40,
+        "rows": 3758,
+        "mae_s": 50.5974,
+        "mae_ztm_s": 63.9891,
+        "gain_s": 13.3917,
+        "rmse_s": 113.9017,
+        "rmse_ztm_s": 134.0829
+      },
+      {
+        "route_code": 47,
+        "rows": 3649,
+        "mae_s": 41.3943,
+        "mae_ztm_s": 49.2971,
+        "gain_s": 7.9028,
+        "rmse_s": 83.6514,
+        "rmse_ztm_s": 107.5855
+      },
+      {
+        "route_code": 39,
+        "rows": 3609,
+        "mae_s": 64.6053,
+        "mae_ztm_s": 85.3976,
+        "gain_s": 20.7923,
+        "rmse_s": 113.0517,
+        "rmse_ztm_s": 141.8601
+      },
+      {
+        "route_code": 49,
+        "rows": 3421,
+        "mae_s": 44.75,
+        "mae_ztm_s": 60.1891,
+        "gain_s": 15.4391,
+        "rmse_s": 96.5392,
+        "rmse_ztm_s": 131.1651
+      },
+      {
+        "route_code": 50,
+        "rows": 3369,
+        "mae_s": 50.8278,
+        "mae_ztm_s": 71.1834,
+        "gain_s": 20.3556,
+        "rmse_s": 81.6669,
+        "rmse_ztm_s": 116.5265
+      },
+      {
+        "route_code": 51,
+        "rows": 2955,
+        "mae_s": 56.5921,
+        "mae_ztm_s": 84.3594,
+        "gain_s": 27.7673,
+        "rmse_s": 81.1542,
+        "rmse_ztm_s": 124.2166
+      },
+      {
+        "route_code": 45,
+        "rows": 2865,
+        "mae_s": 84.2676,
+        "mae_ztm_s": 136.1344,
+        "gain_s": 51.8668,
+        "rmse_s": 127.8185,
+        "rmse_ztm_s": 203.2702
+      },
+      {
+        "route_code": 46,
+        "rows": 2801,
+        "mae_s": 80.2522,
+        "mae_ztm_s": 117.5316,
+        "gain_s": 37.2794,
+        "rmse_s": 147.322,
+        "rmse_ztm_s": 207.3564
+      },
+      {
+        "route_code": 53,
+        "rows": 2524,
+        "mae_s": 52.2143,
+        "mae_ztm_s": 57.6664,
+        "gain_s": 5.4521,
+        "rmse_s": 106.2932,
+        "rmse_ztm_s": 116.2618
+      },
+      {
+        "route_code": 48,
+        "rows": 2458,
+        "mae_s": 79.2917,
+        "mae_ztm_s": 97.8316,
+        "gain_s": 18.5399,
+        "rmse_s": 126.6716,
+        "rmse_ztm_s": 156.0019
+      },
+      {
+        "route_code": 44,
+        "rows": 2424,
+        "mae_s": 81.3971,
+        "mae_ztm_s": 126.5182,
+        "gain_s": 45.1211,
+        "rmse_s": 146.7263,
+        "rmse_ztm_s": 227.4458
+      },
+      {
+        "route_code": 57,
+        "rows": 2360,
+        "mae_s": 50.1129,
+        "mae_ztm_s": 59.7903,
+        "gain_s": 9.6774,
+        "rmse_s": 87.6219,
+        "rmse_ztm_s": 96.6074
+      },
+      {
+        "route_code": 63,
+        "rows": 2352,
+        "mae_s": 57.5898,
+        "mae_ztm_s": 164.8635,
+        "gain_s": 107.2737,
+        "rmse_s": 82.7033,
+        "rmse_ztm_s": 257.7689
+      },
+      {
+        "route_code": 55,
+        "rows": 2302,
+        "mae_s": 28.0171,
+        "mae_ztm_s": 32.7433,
+        "gain_s": 4.7262,
+        "rmse_s": 51.013,
+        "rmse_ztm_s": 62.1539
+      },
+      {
+        "route_code": 52,
+        "rows": 2271,
+        "mae_s": 95.5141,
+        "mae_ztm_s": 116.2299,
+        "gain_s": 20.7158,
+        "rmse_s": 161.3038,
+        "rmse_ztm_s": 201.2327
+      },
+      {
+        "route_code": 59,
+        "rows": 2253,
+        "mae_s": 56.0677,
+        "mae_ztm_s": 90.4421,
+        "gain_s": 34.3743,
+        "rmse_s": 136.2934,
+        "rmse_ztm_s": 179.9936
+      },
+      {
+        "route_code": 58,
+        "rows": 2187,
+        "mae_s": 111.6289,
+        "mae_ztm_s": 154.4966,
+        "gain_s": 42.8677,
+        "rmse_s": 203.1194,
+        "rmse_ztm_s": 254.1106
+      },
+      {
+        "route_code": 54,
+        "rows": 2062,
+        "mae_s": 61.2988,
+        "mae_ztm_s": 93.5286,
+        "gain_s": 32.2298,
+        "rmse_s": 98.4832,
+        "rmse_ztm_s": 155.6517
+      },
+      {
+        "route_code": 56,
+        "rows": 1976,
+        "mae_s": 47.5084,
+        "mae_ztm_s": 68.2141,
+        "gain_s": 20.7057,
+        "rmse_s": 84.0853,
+        "rmse_ztm_s": 117.0404
+      },
+      {
+        "route_code": 66,
+        "rows": 1868,
+        "mae_s": 44.4929,
+        "mae_ztm_s": 78.3148,
+        "gain_s": 33.8219,
+        "rmse_s": 67.5362,
+        "rmse_ztm_s": 149.0497
+      },
+      {
+        "route_code": 62,
+        "rows": 1770,
+        "mae_s": 89.2417,
+        "mae_ztm_s": 124.422,
+        "gain_s": 35.1803,
+        "rmse_s": 165.7892,
+        "rmse_ztm_s": 225.0207
+      },
+      {
+        "route_code": 67,
+        "rows": 1745,
+        "mae_s": 77.2756,
+        "mae_ztm_s": 134.1696,
+        "gain_s": 56.894,
+        "rmse_s": 170.6321,
+        "rmse_ztm_s": 239.8853
+      },
+      {
+        "route_code": 65,
+        "rows": 1711,
+        "mae_s": 39.8162,
+        "mae_ztm_s": 58.8919,
+        "gain_s": 19.0757,
+        "rmse_s": 90.8634,
+        "rmse_ztm_s": 165.3074
+      },
+      {
+        "route_code": 61,
+        "rows": 1673,
+        "mae_s": 88.1436,
+        "mae_ztm_s": 164.4979,
+        "gain_s": 76.3543,
+        "rmse_s": 131.3876,
+        "rmse_ztm_s": 244.002
+      },
+      {
+        "route_code": 60,
+        "rows": 1626,
+        "mae_s": 74.2138,
+        "mae_ztm_s": 124.3303,
+        "gain_s": 50.1165,
+        "rmse_s": 109.2524,
+        "rmse_ztm_s": 169.9802
+      },
+      {
+        "route_code": 64,
+        "rows": 1531,
+        "mae_s": 48.9774,
+        "mae_ztm_s": 59.4344,
+        "gain_s": 10.457,
+        "rmse_s": 82.5513,
+        "rmse_ztm_s": 101.538
+      },
+      {
+        "route_code": 74,
+        "rows": 1514,
+        "mae_s": 37.2555,
+        "mae_ztm_s": 55.1248,
+        "gain_s": 17.8693,
+        "rmse_s": 64.7302,
+        "rmse_ztm_s": 96.062
+      },
+      {
+        "route_code": 72,
+        "rows": 1350,
+        "mae_s": 97.4218,
+        "mae_ztm_s": 154.5926,
+        "gain_s": 57.1708,
+        "rmse_s": 169.1013,
+        "rmse_ztm_s": 243.0825
+      },
+      {
+        "route_code": 70,
+        "rows": 1306,
+        "mae_s": 45.5625,
+        "mae_ztm_s": 88.6493,
+        "gain_s": 43.0868,
+        "rmse_s": 72.619,
+        "rmse_ztm_s": 148.6055
+      },
+      {
+        "route_code": 68,
+        "rows": 1194,
+        "mae_s": 40.2871,
+        "mae_ztm_s": 77.964,
+        "gain_s": 37.6768,
+        "rmse_s": 68.1738,
+        "rmse_ztm_s": 142.513
+      },
+      {
+        "route_code": 69,
+        "rows": 1168,
+        "mae_s": 56.7707,
+        "mae_ztm_s": 60.4443,
+        "gain_s": 3.6736,
+        "rmse_s": 127.014,
+        "rmse_ztm_s": 135.2898
+      },
+      {
+        "route_code": 76,
+        "rows": 1067,
+        "mae_s": 53.414,
+        "mae_ztm_s": 90.7779,
+        "gain_s": 37.3638,
+        "rmse_s": 92.8173,
+        "rmse_ztm_s": 183.5348
+      },
+      {
+        "route_code": 71,
+        "rows": 1012,
+        "mae_s": 23.8435,
+        "mae_ztm_s": 28.7549,
+        "gain_s": 4.9114,
+        "rmse_s": 46.8205,
+        "rmse_ztm_s": 63.4797
+      },
+      {
+        "route_code": 78,
+        "rows": 1001,
+        "mae_s": 91.9931,
+        "mae_ztm_s": 108.7253,
+        "gain_s": 16.7321,
+        "rmse_s": 161.3357,
+        "rmse_ztm_s": 174.113
+      },
+      {
+        "route_code": 77,
+        "rows": 976,
+        "mae_s": 26.6703,
+        "mae_ztm_s": 50.5922,
+        "gain_s": 23.9219,
+        "rmse_s": 43.3278,
+        "rmse_ztm_s": 106.0752
+      },
+      {
+        "route_code": 82,
+        "rows": 956,
+        "mae_s": 69.9618,
+        "mae_ztm_s": 93.8337,
+        "gain_s": 23.8718,
+        "rmse_s": 102.335,
+        "rmse_ztm_s": 152.914
+      },
+      {
+        "route_code": 80,
+        "rows": 946,
+        "mae_s": 47.4897,
+        "mae_ztm_s": 65.3647,
+        "gain_s": 17.8749,
+        "rmse_s": 127.0456,
+        "rmse_ztm_s": 147.1877
+      },
+      {
+        "route_code": 81,
+        "rows": 930,
+        "mae_s": 38.7882,
+        "mae_ztm_s": 26.7806,
+        "gain_s": -12.0076,
+        "rmse_s": 143.7458,
+        "rmse_ztm_s": 133.8052
+      },
+      {
+        "route_code": 75,
+        "rows": 893,
+        "mae_s": 80.9529,
+        "mae_ztm_s": 92.5476,
+        "gain_s": 11.5947,
+        "rmse_s": 120.4862,
+        "rmse_ztm_s": 139.3738
+      },
+      {
+        "route_code": 73,
+        "rows": 886,
+        "mae_s": 65.8782,
+        "mae_ztm_s": 90.8465,
+        "gain_s": 24.9683,
+        "rmse_s": 92.8362,
+        "rmse_ztm_s": 139.7495
+      },
+      {
+        "route_code": 84,
+        "rows": 878,
+        "mae_s": 64.001,
+        "mae_ztm_s": 126.2597,
+        "gain_s": 62.2587,
+        "rmse_s": 88.0104,
+        "rmse_ztm_s": 202.6811
+      },
+      {
+        "route_code": 86,
+        "rows": 750,
+        "mae_s": 71.805,
+        "mae_ztm_s": 170.7093,
+        "gain_s": 98.9044,
+        "rmse_s": 131.2562,
+        "rmse_ztm_s": 318.1289
+      },
+      {
+        "route_code": 83,
+        "rows": 574,
+        "mae_s": 61.7961,
+        "mae_ztm_s": 128.4634,
+        "gain_s": 66.6673,
+        "rmse_s": 114.7587,
+        "rmse_ztm_s": 215.3128
+      },
+      {
+        "route_code": 88,
+        "rows": 364,
+        "mae_s": 94.5421,
+        "mae_ztm_s": 200.7088,
+        "gain_s": 106.1667,
+        "rmse_s": 134.7704,
+        "rmse_ztm_s": 295.1607
+      },
+      {
+        "route_code": 89,
+        "rows": 364,
+        "mae_s": 64.0722,
+        "mae_ztm_s": 94.7555,
+        "gain_s": 30.6833,
+        "rmse_s": 105.2962,
+        "rmse_ztm_s": 136.8041
+      },
+      {
+        "route_code": 92,
+        "rows": 213,
+        "mae_s": 59.9292,
+        "mae_ztm_s": 36.3427,
+        "gain_s": -23.5865,
+        "rmse_s": 155.2625,
+        "rmse_ztm_s": 137.1579
+      },
+      {
+        "route_code": 93,
+        "rows": 176,
+        "mae_s": 82.3194,
+        "mae_ztm_s": 146.3352,
+        "gain_s": 64.0158,
+        "rmse_s": 129.9102,
+        "rmse_ztm_s": 181.6783
+      }
+    ],
+    "route_summary": {
+      "routes_min50": 89,
+      "wins_min50": 87,
+      "losses_min50": 2,
+      "loss_routes": [
+        {
+          "route_code": 92,
+          "rows": 213,
+          "mae_s": 59.9292,
+          "mae_ztm_s": 36.3427,
+          "gain_s": -23.5865,
+          "rmse_s": 155.2625,
+          "rmse_ztm_s": 137.1579
+        },
+        {
+          "route_code": 81,
+          "rows": 930,
+          "mae_s": 38.7882,
+          "mae_ztm_s": 26.7806,
+          "gain_s": -12.0076,
+          "rmse_s": 143.7458,
+          "rmse_ztm_s": 133.8052
+        }
+      ]
+    }
+  },
+  "feature_importance_gain": [
+    {
+      "feature": "current_delay",
+      "gain": 21985324.384723186
+    },
+    {
+      "feature": "stop_mean_target",
+      "gain": 4889919.58391428
+    },
+    {
+      "feature": "hist_mean3",
+      "gain": 3408747.8659615517
+    },
+    {
+      "feature": "current_plus_trend",
+      "gain": 2934422.9974303246
+    },
+    {
+      "feature": "stop_corr_lead",
+      "gain": 2478244.2250876427
+    },
+    {
+      "feature": "stop_std_target",
+      "gain": 2339984.547396183
+    },
+    {
+      "feature": "lead_min",
+      "gain": 2004671.9353747368
+    },
+    {
+      "feature": "stop_mean_corr",
+      "gain": 1859749.8018288612
+    },
+    {
+      "feature": "hour",
+      "gain": 1419178.5423698425
+    },
+    {
+      "feature": "prev1",
+      "gain": 1373600.8243370056
+    },
+    {
+      "feature": "hour_cos",
+      "gain": 1323527.2850909233
+    },
+    {
+      "feature": "vsvc_mean_corr",
+      "gain": 1313039.0957508087
+    },
+    {
+      "feature": "stop",
+      "gain": 1278970.8278951645
+    },
+    {
+      "feature": "route_mean_target",
+      "gain": 1101717.811079979
+    },
+    {
+      "feature": "headsign",
+      "gain": 1065462.8413734436
+    },
+    {
+      "feature": "obs_span_min",
+      "gain": 1058891.7340579033
+    },
+    {
+      "feature": "current_minus_route_mean",
+      "gain": 935403.6493992805
+    },
+    {
+      "feature": "hist_std5",
+      "gain": 875084.5570545197
+    },
+    {
+      "feature": "hist_mean5",
+      "gain": 866632.7869362831
+    },
+    {
+      "feature": "vsvc",
+      "gain": 838942.4875679016
+    },
+    {
+      "feature": "hist_mean3_plus_trend",
+      "gain": 834542.4197602272
+    },
+    {
+      "feature": "route",
+      "gain": 828038.196313858
+    },
+    {
+      "feature": "hist_std3",
+      "gain": 747405.1125588417
+    },
+    {
+      "feature": "route_mean_current",
+      "gain": 743977.6903033257
+    },
+    {
+      "feature": "route_mean_corr",
+      "gain": 635542.4807600975
+    },
+    {
+      "feature": "trend_per_min",
+      "gain": 635130.0067148209
+    },
+    {
+      "feature": "dow",
+      "gain": 611160.3224043846
+    },
+    {
+      "feature": "hour_sin",
+      "gain": 417130.6105003357
+    },
+    {
+      "feature": "route_bucket_corr",
+      "gain": 359145.87248039246
+    },
+    {
+      "feature": "obs_index",
+      "gain": 352477.54761743546
+    },
+    {
+      "feature": "prev2",
+      "gain": 335221.7575902939
+    },
+    {
+      "feature": "delta_prev1",
+      "gain": 294672.95029973984
+    },
+    {
+      "feature": "dow_sin",
+      "gain": 292353.4336910248
+    },
+    {
+      "feature": "route_corr_lead",
+      "gain": 219721.83112955093
+    },
+    {
+      "feature": "delta_prev2",
+      "gain": 181492.73263835907
+    },
+    {
+      "feature": "lead_bucket",
+      "gain": 152967.86782836914
+    },
+    {
+      "feature": "dow_cos",
+      "gain": 126107.78543519974
+    },
+    {
+      "feature": "global_bucket_corr",
+      "gain": 77049.58551979065
+    }
+  ],
+  "elapsed_s": 609.4
+}

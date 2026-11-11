@@ -1,0 +1,73 @@
+{
+  "best_model": "rich features + regression_l1 + no obs_total",
+  "split": {
+    "train_fit": "2026-09-01..2026-10-21",
+    "early_stop": "2026-10-22..2026-10-24",
+    "oct_holdout": "2026-10-25..2026-11-01",
+    "may_holdout": "2026-05-01..2026-05-07"
+  },
+  "oct": {
+    "existing": {
+      "mae": 67.5149,
+      "rmse": 121.0861,
+      "ztm_mae": 90.0278,
+      "gain": 22.5129,
+      "wins": 67,
+      "losses": 22
+    },
+    "new_raw": {
+      "mae": 57.1567,
+      "rmse": 110.747,
+      "ztm_mae": 90.0278,
+      "gain": 32.8711,
+      "wins": 88,
+      "losses": 1
+    },
+    "new_gated": {
+      "mae": 56.4659,
+      "rmse": 110.6563,
+      "ztm_mae": 90.0278,
+      "gain": 33.5619
+    }
+  },
+  "may": {
+    "existing": {
+      "mae": 62.574,
+      "rmse": 105.9952,
+      "ztm_mae": 119.1519,
+      "gain": 56.5778,
+      "wins": 90,
+      "losses": 2
+    },
+    "new_raw": {
+      "mae": 62.5291,
+      "rmse": 111.3731,
+      "ztm_mae": 119.1519,
+      "gain": 56.6228,
+      "wins": 90,
+      "losses": 2
+    },
+    "new_gated": {
+      "mae": 62.1297,
+      "rmse": 111.4215,
+      "ztm_mae": 119.1519,
+      "gain": 57.0222
+    }
+  },
+  "config": {
+    "objective": "regression_l1",
+    "learning_rate": 0.05,
+    "num_leaves": 128,
+    "min_child_samples": 100,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "colsample_bytree": 0.8,
+    "reg_lambda": 0.0,
+    "force_col_wise": true,
+    "seed": 42,
+    "num_threads": 10,
+    "verbosity": -1,
+    "metric": "mae"
+  },
+  "n_features": 38
+}

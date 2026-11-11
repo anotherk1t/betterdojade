@@ -1,0 +1,15 @@
+[Unit]
+Description=betterdojade live delay-prediction service
+After=network-online.target
+
+[Service]
+WorkingDirectory=/home/yan/bikerouter
+ExecStart=/usr/bin/python3 -u dev_tools/scripts/delay_service.py --port 8091 --poll 60
+Restart=always
+RestartSec=5
+# Resource caps so the public service can never crowd out the data collector
+MemoryMax=1G
+CPUQuota=80%
+
+[Install]
+WantedBy=default.target
