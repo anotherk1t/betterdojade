@@ -131,6 +131,12 @@ function createRouteCard(route, index) {
         }
 
         badge.textContent = label;
+        if (leg.mode === 'bike') {
+            const beta = document.createElement('span');
+            beta.className = 'bike-beta-label';
+            beta.textContent = 'BETA';
+            badge.appendChild(beta);
+        }
         legsRow.appendChild(badge);
     });
 
@@ -153,7 +159,7 @@ function createRouteCard(route, index) {
         if (leg.mode === 'walk') {
             descEl.textContent = `🚶 Walk ${fromName ? 'from ' + fromName : ''} ${toName ? 'to ' + toName : ''} (${formatDuration(leg.duration)})`;
         } else if (leg.mode === 'bike') {
-            descEl.textContent = `🚲 Bike ${fromName ? 'from ' + fromName : ''} ${toName ? 'to ' + toName : ''} (${formatDuration(leg.duration)})`;
+            descEl.textContent = `🚲 Bike (BETA) ${fromName ? 'from ' + fromName : ''} ${toName ? 'to ' + toName : ''} (${formatDuration(leg.duration)})`;
         } else {
             const mLabel = modeLabels[leg.mode] || 'Bus';
             const rName = leg.routeName || '';
