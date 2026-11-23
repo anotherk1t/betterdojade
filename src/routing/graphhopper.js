@@ -6,6 +6,70 @@
 
 const GH_BASE = (import.meta.env.VITE_GRAPH_HOPPER_URL || '/graphhopper').replace(/\/$/, '');
 
+const UNPAVED_SURFACE_VALUES = new Set([
+    'unpaved',
+    'gravel',
+    'dirt',
+    'ground',
+    'grass',
+    'sand',
+    'earth',
+    'mud',
+    'wood',
+]);
+
+export function isUnpavedSurface(value) {
+    if (typeof value !== 'string') return false;
+    return UNPAVED_SURFACE_VALUES.has(value.toLowerCase().trim());
+}
+
+/**
+ * Calculate the share of a route that uses an unpaved surface.
+ * GraphHopper surface details use geometry point indexes as their intervals.
+ * Returns null when surface details are unavailable.
+ */
+export function calculateUnpavedRatio(path) {
+    const surfaceDetails = path?.details?.surface;
+    if (!Array.isArray(surfaceDetails) || surfaceDetails.length === 0) return null;
+
+    const coordinates = path?.points?.coordinates;
+    if (!Array.isArray(coordinates) || coordinates.length < 2) return null;
+
+    const cumulativeDistance = [0];
+    for (let i = 1; i < coordinates.length; i++) {
+        const [lon1, lat1] = coordinates[i - 1];
+        const [lon2, lat2] = coordinates[i];
+        const latDelta = (lat2 - lat1) * Math.PI / 180;
+        const lonDelta = (lon2 - lon1) * Math.PI / 180;
+        const lat1Rad = lat1 * Math.PI / 180;
+        const lat2Rad = lat2 * Math.PI / 180;
+        const a = Math.sin(latDelta / 2) ** 2
+            + Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(lonDelta / 2) ** 2;
+        cumulativeDistance.push(cumulativeDistance[i - 1]
+            + 6371000 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+    }
+
+    const totalDistance = cumulativeDistance[cumulativeDistance.length - 1];
+    if (totalDistance <= 0) return null;
+
+    let unpavedDistance = 0;
+    for (const detail of surfaceDetails) {
+        if (!Array.isArray(detail) || detail.length < 3) continue;
+        const fromIndex = Math.max(0, Math.min(coordinates.length - 1, Number(detail[0])));
+        const toIndex = Math.max(fromIndex, Math.min(coordinates.length - 1, Number(detail[1])));
+        if (isUnpavedSurface(detail[2])) {
+            unpavedDistance += Math.max(0, cumulativeDistance[toIndex] - cumulativeDistance[fromIndex]);
+        }
+    }
+
+    return unpavedDistance / totalDistance;
+}
+
+export function exceedsUnpavedLimit(path, limit = 0.10) {
+    const ratio = calculateUnpavedRatio(path);
+    return ratio !== null && ratio > limit + 1e-9;
+}
+
 // ---------------------------------------------------------------------------
 // Street routing (foot / bike)
 // ---------------------------------------------------------------------------
@@ -25,6 +89,7 @@ async function getRoute(from, to, profile) {
             `?point=${from.lat},${from.lon}` +
             `&point=${to.lat},${to.lon}` +
             `&profile=${encodeURIComponent(profile)}` +
+            `&details=surface` +
             `&locale=en` +
             `&points_encoded=false`;
 
@@ -38,6 +103,11 @@ async function getRoute(from, to, profile) {
         if (!data.paths || data.paths.length === 0) return null;
 
         const path = data.paths[0];
+        if (profile === 'bike' && exceedsUnpavedLimit(path)) {
+            const ratio = calculateUnpavedRatio(path);
+            console.info(`[GraphHopper] Rejected cycling route: ${(ratio * 100).toFixed(1)}% unpaved`);
+            return null;
+        }
 
         // GeoJSON coordinates are [lon, lat]; convert to Leaflet [lat, lon].
         const geometry = path.points.coordinates.map(([lon, lat]) => [lat, lon]);
@@ -46,6 +116,7 @@ async function getRoute(from, to, profile) {
             duration: path.time / 1000,  // ms → seconds
             distance: path.distance,     // already in meters
             geometry,
+            unpavedRatio: calculateUnpavedRatio(path),
         };
     } catch (e) {
         console.warn(`[GraphHopper] Failed to get ${profile} route:`, e.message);
